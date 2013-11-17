@@ -2,7 +2,10 @@
 #include "StringHelper.h"
 #include <string>
 #include <vector>
-#include <Windows.h>
+
+#ifndef NT_SUCCESS
+#define NT_SUCCESS(Status) ((NTSTATUS)(Status) >= 0)
+#endif
 
 using namespace std;
 
@@ -20,19 +23,29 @@ wstring CryptRandomNumberGenerator::Generate(const wstring & algType, int length
 	BCRYPT_ALG_HANDLE hAlgorithm = NULL;
 	StringHelper stringHelper;
 
-	ULONG cbBuffer = lengthRandomByteArray;;
+	ULONG cbBuffer = lengthRandomByteArray;
 	vector<UCHAR> pbBuffer;
-	ULONG dwFlags = BCRYPT_RNG_USE_ENTROPY_IN_BUFFER;;
-	NTSTATUS res;
-	wstring resultRandomString;
+	ULONG dwFlags = BCRYPT_RNG_USE_ENTROPY_IN_BUFFER;	
+	wstring resultRandomString = L"";
+	NTSTATUS status;
 
-	res = BCryptOpenAlgorithmProvider(&hAlgorithm, algType.c_str(), NULL, 0);
+	status = BCryptOpenAlgorithmProvider(&hAlgorithm, algType.c_str(), NULL, 0);
 
-	pbBuffer.resize(cbBuffer);
-	res = BCryptGenRandom(hAlgorithm, &pbBuffer[0], cbBuffer, dwFlags);
-	res = BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+	if(NT_SUCCESS(status))
+	{
+		pbBuffer.resize(cbBuffer);				
 
-	resultRandomString = stringHelper.ConvertByteArrayToString(&pbBuffer[0], cbBuffer);
+		status = BCryptGenRandom(hAlgorithm, &pbBuffer[0], cbBuffer, dwFlags);
+
+		if (NT_SUCCESS(status))
+		{
+			status = BCryptCloseAlgorithmProvider(hAlgorithm, 0);
+			if (NT_SUCCESS(status))
+			{
+				resultRandomString = stringHelper.ConvertByteArrayToString(&pbBuffer[0], cbBuffer);
+			}
+		}
+	}
 
 	return resultRandomString;
 }
