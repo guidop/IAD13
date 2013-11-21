@@ -1,16 +1,12 @@
 #include "stdafx.h"
-#include "MemLeakTest.h"
+#include "gtest\gtest.h"
+#include <memory>
 
-MemLeakTest::MemLeakTest()
+using namespace std;
+
+TEST(MemLeakTest, ShouldNotLeakMemory)
 {
-}
-
-
-MemLeakTest::~MemLeakTest()
-{
-}
-
-TEST_F(MemLeakTest, primoTest)
-{
-	ASSERT_EQ(1, 1);
+	auto i = new int{ 10 };
+	cout << *i << endl;
+	delete i;
 }

@@ -27,9 +27,6 @@
     <ClInclude Include="MemoryLeakListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MemLeakTest.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CryptRandomNumberGeneratorTest.h">
       <Filter>Header Files</Filter>
     </ClInclude>
