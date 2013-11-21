@@ -7,16 +7,11 @@
 
 using namespace std;
 
-CTimer::CTimer(void)
+CTimer::CTimer()
 {
 	m_StartTime = 0;
 	m_StopTime = 0;
 	m_TimeOccured = 0;
-}
-
-
-CTimer::~CTimer(void)
-{
 }
 
 void CTimer::Start()
@@ -40,10 +35,17 @@ void CTimer::Stop()
 	cout << "Tempo speso : " << m_TimeOccured*1000000 << " microsec"<<endl;
 }
 
-void CTimer::GetElapsedTimeInMicros()
+void CTimer::PrintElapsedTimeInMicros()
 {
 	QueryPerformanceCounter((LARGE_INTEGER *)&m_StopTime);
 	QueryPerformanceFrequency((LARGE_INTEGER *)&m_Frequency);
 	m_TimeOccured = (m_StopTime - m_StartTime)*1.0 / m_Frequency;
 	cout << "Tempo speso : " << m_TimeOccured*1000000 << " microsec"<<endl;
+}
+
+double CTimer::GetElapsedTimeInMicros()
+{
+	QueryPerformanceCounter((LARGE_INTEGER *) &m_StopTime);
+	QueryPerformanceFrequency((LARGE_INTEGER *) &m_Frequency);
+	return (m_StopTime - m_StartTime)*1.0 / m_Frequency;
 }

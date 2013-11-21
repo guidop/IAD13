@@ -4,12 +4,12 @@
 class IAD13_EXPORTS_API CTimer
 {
 public:
-	CTimer(void);
-	~CTimer(void);
+	CTimer();
 public :
 	void Start();
 	void Stop();
-	void GetElapsedTimeInMicros();
+	double GetElapsedTimeInMicros();
+	void PrintElapsedTimeInMicros();
 private:
 	double m_TimeOccured;
 	__int64 m_StartTime;

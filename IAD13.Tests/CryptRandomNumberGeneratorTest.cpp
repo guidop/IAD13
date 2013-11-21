@@ -1,8 +1,8 @@
 #include "CryptRandomNumberGeneratorTest.h"
 #include "..\IAD13\Timer.h"
 #include <string>
+#include <iostream>
 #include <Windows.h>
-
 
 using namespace std;
 
@@ -10,9 +10,6 @@ void CryptRandomNumberGeneratorTest::SetUp()
 {
 	m_numAttempt = 100;
 	m_lengthByteArray = 2;
-}
-void CryptRandomNumberGeneratorTest::TearDown()
-{
 }
 
 //con 10000 tentativi e 2 byte, RNG_ALGORITHM e RNG_FIPS186_DSA_ALGORITHM impiegano lo stesso tempo
@@ -28,7 +25,9 @@ TEST_F(CryptRandomNumberGeneratorTest, GenerateRandomNumber_RNG_ALGORITHM)
 		result2 = m_cryptRandomNumberGenerator.Generate(BCRYPT_RNG_ALGORITHM, m_lengthByteArray);
 		ASSERT_NE(result1, result2);
 	}
-	timer.Stop();
+	std::cout << "##teamcity[buildStatisticValue key='" <<
+				"CryptRandomNumberGeneratorTest.GenerateRandomNumber_RNG_ALGORITHM" <<
+				"' value='" << timer.GetElapsedTimeInMicros() << "']" << endl;
 }
 
 TEST_F(CryptRandomNumberGeneratorTest, GenerateRandomNumber_RNG_DUAL_EC_ALGORITHM)
@@ -42,5 +41,7 @@ TEST_F(CryptRandomNumberGeneratorTest, GenerateRandomNumber_RNG_DUAL_EC_ALGORITH
 		result2 = m_cryptRandomNumberGenerator.Generate(BCRYPT_RNG_DUAL_EC_ALGORITHM, m_lengthByteArray);
 		ASSERT_NE(result1, result2);
 	}
-	timer.Stop();
+	std::cout << "##teamcity[buildStatisticValue key='" <<
+				 "CryptRandomNumberGeneratorTest.GenerateRandomNumber_RNG_DUAL_EC_ALGORITHM" <<
+				 "' value='" << timer.GetElapsedTimeInMicros() << "']" << endl;
 }

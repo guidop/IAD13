@@ -11,9 +11,6 @@ void bye(void)
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	//::testing::InitGoogleTest(&argc, argv);   return RUN_ALL_TESTS(); 
-	//exit(0);
-
 	atexit(bye);
 
 	::testing::InitGoogleTest(&argc, argv);
@@ -22,6 +19,5 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	listeners.Append(new CMemoryLeakListener{});
 
-	int result = RUN_ALL_TESTS();
-	return result;
+	return RUN_ALL_TESTS();
 }
