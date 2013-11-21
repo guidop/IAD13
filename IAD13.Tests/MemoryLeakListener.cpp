@@ -1,8 +1,9 @@
 #include "MemoryLeakListener.h"
 
 
-CMemoryLeakListener::CMemoryLeakListener(void)
+CMemoryLeakListener::CMemoryLeakListener(bool hookPrinter)
 {
+	m_hookPrinter = hookPrinter;
 }
 
 
@@ -46,9 +47,11 @@ int __cdecl printToStdErr(int , char* szMsg, int* ){
 
 void CMemoryLeakListener::OnTestProgramStart(const ::testing::UnitTest& )
 {
-	_CrtSetReportHook2(_CRT_RPTHOOK_INSTALL, &printToStdErr);
+	if (m_hookPrinter)
+		_CrtSetReportHook2(_CRT_RPTHOOK_INSTALL, &printToStdErr);
 }
 void CMemoryLeakListener::OnTestProgramEnd(const ::testing::UnitTest& )
 {
-	_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE, &printToStdErr);
+	if (m_hookPrinter)
+		_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE, &printToStdErr);
 }

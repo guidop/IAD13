@@ -3,7 +3,7 @@
 class CMemoryLeakListener : public ::testing::EmptyTestEventListener 
 {
 public:
-	CMemoryLeakListener(void);
+	CMemoryLeakListener(bool hookPrinter);
 	~CMemoryLeakListener(void);
 
 	 void OnTestStart(const ::testing::TestInfo& test_info);
@@ -14,5 +14,6 @@ public:
 private:
 	_CrtMemState memAtStart;	
 	void CheckForMemLeaks(const ::testing::TestInfo& test_info);
+	bool m_hookPrinter;
 };
 
