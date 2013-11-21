@@ -8,5 +8,5 @@ TEST(MemLeakTest, ShouldNotLeakMemory)
 {
 	auto i = new int{ 10 };
 	cout << *i << endl;
-//	delete i;
+	delete i;
 }
