@@ -4,9 +4,10 @@
 
 using namespace std;
 
-TEST(MemLeakTest, ShouldNotLeakMemory)
+TEST(MemLeakTest, ShouldLeakMemory)
 {
-	auto i = new int{ 10 };
-	cout << *i << endl;
-	delete i;
+	int *i = new int[1];
+	i[0] = 10;
+	cout << i[0] << endl;
+	//delete i;
 }

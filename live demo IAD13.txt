@@ -1,0 +1,28 @@
+note generali: essendo che l'output su console soprattutto nella seconda live è ampio, impostare una width sulla command line sufficiente a far si che gtest non vada capo
+
+//////////////// live demo mem leak listener (attenzione, solution in DEBUG) //////////////// 
+1) lanciare il test da command line in DEBUG scrivendo  IAD13.Tests.exe --gtest_filter=*ShouldLeakMemory 1
+	- nome test come primo param
+	- 1 come secondo param
+in questo modo sulla console di gtest appare test red e problema
+
+2) fare la stessa cosa da VS2013 con F5 (il filtro del test deve essere impostato nel .vcxproj, ma nulla come secondo param)
+	- in questom modo output su VS2013
+	- doppio click sul problema, effettuare fix e ricompilare
+
+3) rilanciare il test da command line e vedere che è verde
+
+
+////////////////  live demo PRNG (attenzione, solution in RELEASE) //////////////// 
+1) lanciare da command line IAD13.Tests.exe --gtest_filter=*GenerateRandomNumber*
+2) si mostrerà che una delle due implementazioni va 100 volte più lenta dell'altra
+
+
+
+////////////////  live demo static analysis (attenzione, solution in RELEASE) //////////////// 
+Non è previsto ora, eventualmente su richiesta del pubblico. Alcuni snippet messi direttamnete nelle slide
+
+
+
+
+
