@@ -1,20 +1,16 @@
 #include "MemoryLeakListener.h"
+#include <Windows.h>
 
-
-CMemoryLeakListener::CMemoryLeakListener(bool hookPrinter)
+CMemoryLeakListener::CMemoryLeakListener()
 {
-	m_hookPrinter = hookPrinter;
-}
-
-
-CMemoryLeakListener::~CMemoryLeakListener(void)
-{
+	m_hookPrinter = IsDebuggerPresent() == 0;
 }
 
 void CMemoryLeakListener::OnTestStart(const ::testing::TestInfo& )
 {
 	_CrtMemCheckpoint( &memAtStart );
 }
+
 void CMemoryLeakListener::OnTestEnd(const ::testing::TestInfo& test_info)
 {
 	if(test_info.result()->Passed())
@@ -38,12 +34,10 @@ void CMemoryLeakListener::CheckForMemLeaks(const ::testing::TestInfo& test_info)
 	}
 }
 
-
 int __cdecl printToStdErr(int , char* szMsg, int* ){
  std::cerr << szMsg; 
  return 1; // No further processing required by _CrtDebugReport
 }
-
 
 void CMemoryLeakListener::OnTestProgramStart(const ::testing::UnitTest& )
 {

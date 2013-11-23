@@ -1,10 +1,10 @@
 #pragma once
 #include "gtest\gtest.h"
+
 class CMemoryLeakListener : public ::testing::EmptyTestEventListener 
 {
 public:
-	CMemoryLeakListener(bool hookPrinter);
-	~CMemoryLeakListener(void);
+	CMemoryLeakListener();
 
 	 void OnTestStart(const ::testing::TestInfo& test_info);
 	 void OnTestEnd(const ::testing::TestInfo& test_info);
